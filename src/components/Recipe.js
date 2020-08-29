@@ -1,16 +1,24 @@
 import React from "react";
 
-function Recipe({ title, calories, image, ingredients }) {
+function Recipe({ title, calories, image, ingredients, unique }) {
   return (
-    <div>
-      <h1>{title}</h1>
-      <p>{calories}</p>
-      <ul>
-        {ingredients.map((ingredient) => (
-          <li key={ingredient}>{ingredient.text}</li>
-        ))}
-      </ul>
-      <img src={image} />
+    <div className='container'>
+      <div>
+        <img src={image} />
+      </div>
+      <div className='content'>
+        <h1>{title}</h1>
+        <p>
+          <b>Calories:</b> {Math.round(calories) } kcal
+        </p>
+        <div>
+          <ul>
+            {ingredients.map((ingredient) => (
+              <li key={unique}>{ingredient.text}</li>
+            ))}
+          </ul>
+        </div>
+      </div>
     </div>
   );
 }

@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from "react";
 import Recipe from "./Recipe";
+import UUID from 'uuid/v4'
+
 
 function Main() {
   const APP_ID = "0753b0e9";
@@ -7,6 +9,9 @@ function Main() {
   const [query, setQuery] = useState("chicken");
   const [search, setSearch] = useState("");
   const [recipes, setRecipes] = useState([]);
+
+
+
 
   useEffect(() => {
     getRecipe();
@@ -18,7 +23,8 @@ function Main() {
     );
     const data = await response.json();
     setRecipes(data.hits);
-    console.log(data.hits);
+
+    console.log(data);
   };
   const updateSearch = (e) => {
     setSearch(e.target.value);
@@ -29,6 +35,8 @@ function Main() {
     setQuery(search);
     setSearch("");
   };
+
+
   return (
     <div>
       <form onSubmit={getSearch}>
@@ -36,21 +44,26 @@ function Main() {
           className='search-bar'
           type='text'
           value={search}
+          placeholder="Search for your meal..."
           onChange={updateSearch}
         />
         <input className='btn' type='Submit' />
       </form>
-      {recipes.map((recipe) => {
-        return (
-          <Recipe
-            key={recipe.recipe.calories}
-            title={recipe.recipe.label}
-            calories={recipe.recipe.calories}
-            image={recipe.recipe.image}
-            ingredients={recipe.recipe.ingredients}
-          />
-        );
-      })}
+      <div className='recipe'>
+        {recipes.map((recipe) => {
+          return (
+           
+              <Recipe
+                unique={UUID()}
+                title={recipe.recipe.label}
+                calories={recipe.recipe.calories}
+                image={recipe.recipe.image}
+                ingredients={recipe.recipe.ingredients}
+              />
+
+          );
+        })}
+      </div>
     </div>
   );
 }
